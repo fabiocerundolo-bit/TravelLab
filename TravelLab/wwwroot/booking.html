@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles1.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Editorial Voyager | Book Your Journey</title>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container">
+<nav class="fixed top-0 w-full z-50 bg-white/60 backdrop-blur-lg shadow-[0_20px_40px_rgba(0,0,0,0.04)]">
+    <div class="flex justify-between items-center px-12 py-6 max-w-[1920px] mx-auto">
+        <a href="index.html" class="font-['Noto_Serif'] text-2xl font-bold italic text-blue-900">The Editorial Voyager</a>
+        <div class="hidden md:flex items-center gap-10">
+            <a href="destinations.html" class="font-['Noto_Serif'] font-medium uppercase tracking-widest text-xs text-stone-600 hover:text-blue-900 transition-colors">Destinations</a>
+            <a href="deals.html" class="font-['Noto_Serif'] font-medium uppercase tracking-widest text-xs text-stone-600 hover:text-blue-900 transition-colors">Deals</a>
+            <a href="about.html" class="font-['Noto_Serif'] font-medium uppercase tracking-widest text-xs text-stone-600 hover:text-blue-900 transition-colors">About Us</a>
+        </div>
+        <div class="flex items-center gap-6">
+            <a href="booking.html" class="bg-primary text-on-primary px-8 py-3 font-label text-xs uppercase tracking-[0.2em] rounded-sm hover:opacity-90 transition-all active:scale-95 duration-200">Book Now</a>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-32 pb-20 px-12">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="font-headline text-5xl text-primary text-center mb-6">Plan Your Journey</h1>
+        <p class="text-center text-on-surface-variant mb-12">Fill out the form below and one of our travel editors will craft a bespoke itinerary within 24 hours.</p>
+
+        <form id="booking-form" class="bg-white rounded-sm editorial-shadow p-8 md:p-12 space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div><label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Full name</label><input type="text" id="fullname" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary" placeholder="Eleanor Sterling" required></div>
+                <div><label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Email address</label><input type="email" id="email" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary" placeholder="hello@example.com" required></div>
+                <div><label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Phone (optional)</label><input type="tel" id="phone" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary" placeholder="+1 234 567 890"></div>
+                <div><label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Preferred destination</label><select id="destination" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary" required></select></div>
+                <div><label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Travel dates (approx)</label><input type="text" id="travel_dates" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary" placeholder="e.g., Sep 2024" required></div>
+                <div><label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Number of travelers</label><input type="number" id="travelers" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary" placeholder="2" required></div>
+            </div>
+            <div><label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Special requests or preferences</label><textarea id="requests" rows="4" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary" placeholder="Dietary restrictions, hotel preferences, must-see experiences..."></textarea></div>
+            <div><button type="submit" class="w-full bg-primary text-on-primary py-4 text-sm uppercase tracking-wider font-bold rounded-sm hover:opacity-90 transition">Submit Inquiry →</button></div>
+            <p class="text-xs text-center text-on-surface-variant">Our travel architects will respond within 24h. No obligation to book.</p>
+        </form>
+
+        <div class="mt-16 text-center border-t border-outline-variant/30 pt-12">
+            <p class="text-on-surface-variant">Prefer to speak with a human? Call us at <span class="font-bold text-primary">+1 (888) 123-4567</span> or email <span class="font-bold text-primary">concierge@editorialvoyager.com</span></p>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-stone-50 w-full py-16 mt-12">
+    <div class="flex flex-col md:flex-row justify-between items-start px-12 max-w-7xl mx-auto gap-12">
+        <div class="max-w-xs"><div class="font-['Noto_Serif'] text-xl font-semibold text-blue-900 mb-6">The Editorial Voyager</div><p class="font-['Manrope'] text-sm tracking-tight text-stone-500 leading-relaxed">Crafting refined travel experiences for the discerning global citizen.</p></div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-16">
+            <div><h5 class="font-label text-[10px] uppercase tracking-[0.2em] font-bold text-primary">Discover</h5><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">Privacy Policy</a><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">Terms of Service</a></div>
+            <div><h5 class="font-label text-[10px] uppercase tracking-[0.2em] font-bold text-primary">Contact</h5><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">Contact</a><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">Support</a></div>
+            <div><h5 class="font-label text-[10px] uppercase tracking-[0.2em] font-bold text-primary">Social</h5><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">Instagram</a><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">LinkedIn</a></div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-12 mt-16 pt-8 border-t border-stone-200"><p class="font-['Manrope'] text-sm tracking-tight text-stone-400">© 2024 The Editorial Voyager. All rights reserved.</p></div>
+</footer>
+
+<script>
+    async function populateDestinations() {
+        try {
+            const res = await fetch('/api/viaggi');
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const viaggi = await res.json();
+            const select = document.getElementById('destination');
+            select.innerHTML = '<option value="">Seleziona una destinazione</option>' +
+                viaggi.map(v => `<option value="${v.id}">${v.destinazione} (da €${v.prezzoBase})</option>`).join('');
+        } catch (err) {
+            console.error('Errore destinazioni:', err);
+            alert('Impossibile caricare le destinazioni. Verifica che il backend sia in esecuzione su http://localhost:5070');
+        }
+    }
+
+    const form = document.getElementById('booking-form');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const fullname = document.getElementById('fullname').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const viaggioId = parseInt(document.getElementById('destination').value);
+        const dataPrenotazione = new Date().toISOString().split('T')[0];
+        const stato = 'Confermata';
+
+        if (!fullname || !email || !viaggioId) {
+            alert('Compila tutti i campi obbligatori.');
+            return;
+        }
+
+        const nomeParts = fullname.split(' ');
+        const nome = nomeParts[0];
+        const cognome = nomeParts.slice(1).join(' ') || 'Cognome';
+
+        try {
+            // 1. Verifica se il cliente esiste
+            const clienteRes = await fetch(`/api/clienti/by-email?email=${encodeURIComponent(email)}`);
+            if (!clienteRes.ok) throw new Error(`HTTP ${clienteRes.status} - ${await clienteRes.text()}`);
+            let cliente = null;
+            try {
+                cliente = await clienteRes.json();
+            } catch (e) {
+                console.warn('Risposta non JSON, assumo cliente nullo');
+            }
+
+            let clienteId;
+            if (!cliente || !cliente.id) {
+                // Crea nuovo cliente
+                const newCliente = { nome, cognome, email, telefono: phone, indirizzo: '' };
+                const createRes = await fetch('/api/clienti', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newCliente)
+                });
+                if (!createRes.ok) throw new Error(`Creazione cliente fallita: ${await createRes.text()}`);
+                const newClienteData = await createRes.json();
+                clienteId = newClienteData.id;
+            } else {
+                clienteId = cliente.id;
+            }
+
+            // 2. Crea prenotazione
+            const prenotazione = { clienteId, viaggioId, agenziaId: 1, dataPrenotazione, stato };
+            const bookRes = await fetch('/api/prenotazioni', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(prenotazione)
+            });
+            if (bookRes.ok) {
+                alert('Prenotazione inviata con successo! Riceverai una email di conferma.');
+                form.reset();
+            } else {
+                const err = await bookRes.text();
+                alert('Errore durante la prenotazione: ' + err);
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Errore: ' + err.message);
+        }
+    });
+
+    populateDestinations();
+</script>
+</body>
+</html>

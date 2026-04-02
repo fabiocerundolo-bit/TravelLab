@@ -51,5 +51,14 @@ namespace TravelLab.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetClienti), new { id = cliente.Id }, cliente);
         }
+        [HttpGet("by-email")]
+        public async Task<IActionResult> GetClienteByEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                return BadRequest(new { error = "Email richiesta" });
+    
+            var cliente = await _context.Clienti.FirstOrDefaultAsync(c => c.Email == email);
+            return Ok(cliente); // restituisce null se non trovato
+        }
     }
 }

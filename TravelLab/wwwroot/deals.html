@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles1.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Editorial Voyager | Exclusive Deals</title>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container">
+<nav class="fixed top-0 w-full z-50 bg-white/60 backdrop-blur-lg shadow-[0_20px_40px_rgba(0,0,0,0.04)]">
+    <div class="flex justify-between items-center px-12 py-6 max-w-[1920px] mx-auto">
+        <a href="index.html" class="font-['Noto_Serif'] text-2xl font-bold italic text-blue-900">The Editorial Voyager</a>
+        <div class="hidden md:flex items-center gap-10">
+            <a href="destinations.html" class="font-['Noto_Serif'] font-medium uppercase tracking-widest text-xs text-stone-600 hover:text-blue-900 transition-colors">Destinations</a>
+            <a href="deals.html" class="font-['Noto_Serif'] font-medium uppercase tracking-widest text-xs text-blue-900 border-b border-blue-900/20 pb-1">Deals</a>
+            <a href="about.html" class="font-['Noto_Serif'] font-medium uppercase tracking-widest text-xs text-stone-600 hover:text-blue-900 transition-colors">About Us</a>
+        </div>
+        <div class="flex items-center gap-6">
+            <a href="booking.html" class="bg-primary text-on-primary px-8 py-3 font-label text-xs uppercase tracking-[0.2em] rounded-sm hover:opacity-90 transition-all active:scale-95 duration-200">Book Now</a>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <section class="relative min-h-[70vh] flex items-center justify-center pt-24 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Luxury travel deal">
+            <div class="absolute inset-0 bg-primary/40 backdrop-brightness-75"></div>
+        </div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-12 text-center">
+            <span class="inline-block bg-white/20 backdrop-blur-sm px-4 py-1 rounded-full text-white text-xs tracking-wider uppercase font-bold mb-6">Limited Availability</span>
+            <h1 class="font-headline text-6xl md:text-7xl text-white leading-tight mb-6">Exclusive <span class="italic">Editor’s Picks</span></h1>
+            <p class="text-white/90 text-lg max-w-2xl mx-auto">Curated reductions on our most coveted journeys. Timeless experiences, now within closer reach.</p>
+        </div>
+    </section>
+
+    <section class="py-32 px-12 max-w-[1920px] mx-auto bg-surface-container-low">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-20">
+            <div><span class="text-tertiary font-label text-xs uppercase tracking-[0.3em] font-bold mb-4 block">Flash Sale</span><h2 class="font-headline text-5xl text-primary leading-tight">Limited‑Time Offers</h2></div>
+            <p class="text-on-surface-variant max-w-md text-right text-sm">Book by May 15 to secure savings + exclusive room upgrades.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="deals-grid"></div>
+    </section>
+
+    <section class="py-28 px-12 bg-primary text-on-primary text-center">
+        <div class="max-w-3xl mx-auto">
+            <span class="material-symbols-outlined text-4xl mb-4">mail</span>
+            <h2 class="font-headline text-4xl md:text-5xl mb-4">Be the first to know</h2>
+            <p class="text-on-primary/80 mb-10">Subscribe to receive exclusive flash deals and early access to new collections.</p>
+            <div class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                <input type="email" placeholder="Your email address" class="flex-1 bg-white/20 border border-white/30 rounded-sm px-6 py-4 text-on-primary placeholder:text-on-primary/60 focus:outline-none focus:ring-1 focus:ring-white">
+                <button class="bg-white text-primary px-10 py-4 font-bold uppercase tracking-widest text-xs hover:bg-opacity-90 transition">Subscribe</button>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-stone-50 w-full py-16">
+    <div class="flex flex-col md:flex-row justify-between items-start px-12 max-w-7xl mx-auto gap-12">
+        <div class="max-w-xs"><div class="font-['Noto_Serif'] text-xl font-semibold text-blue-900 mb-6">The Editorial Voyager</div><p class="font-['Manrope'] text-sm tracking-tight text-stone-500 leading-relaxed">Crafting refined travel experiences for the discerning global citizen.</p></div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-16">
+            <div><h5 class="font-label text-[10px] uppercase tracking-[0.2em] font-bold text-primary">Discover</h5><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">Privacy Policy</a><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">Terms of Service</a></div>
+            <div><h5 class="font-label text-[10px] uppercase tracking-[0.2em] font-bold text-primary">Contact</h5><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">Contact</a><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">Support</a></div>
+            <div><h5 class="font-label text-[10px] uppercase tracking-[0.2em] font-bold text-primary">Social</h5><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">Instagram</a><a href="#" class="block text-stone-500 text-sm mt-2 hover:text-orange-950 underline underline-offset-8">LinkedIn</a></div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-12 mt-16 pt-8 border-t border-stone-200"><p class="font-['Manrope'] text-sm tracking-tight text-stone-400">© 2024 The Editorial Voyager. All rights reserved.</p></div>
+</footer>
+
+<script>
+    async function loadDeals() {
+        try {
+            const res = await fetch('/api/viaggi');
+            let viaggi = await res.json();
+            viaggi.sort((a,b) => a.prezzoBase - b.prezzoBase);
+            const deals = viaggi.slice(0, 6);
+            const grid = document.getElementById('deals-grid');
+            grid.innerHTML = deals.map(v => {
+                const sconto = Math.floor(Math.random() * 30) + 10;
+                const prezzoScontato = (v.prezzoBase * (1 - sconto/100)).toFixed(2);
+                return `
+                        <div class="group cursor-pointer bg-white rounded-sm editorial-shadow overflow-hidden transition-all hover:shadow-xl">
+                            <div class="aspect-[4/3] overflow-hidden relative">
+                                <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="${v.destinazione}">
+                                <div class="absolute top-4 left-4 bg-tertiary text-on-tertiary px-3 py-1 text-xs font-bold uppercase tracking-wider">-${sconto}% OFF</div>
+                            </div>
+                            <div class="p-8">
+                                <h3 class="font-headline text-2xl mb-2">${v.destinazione}</h3>
+                                <p class="text-on-surface-variant text-sm mb-4">${v.descrizione?.substring(0, 80) || ''}...</p>
+                                <div class="flex justify-between items-center">
+                                    <div><span class="line-through text-stone-400 text-sm">€${v.prezzoBase}</span> <span class="font-bold text-2xl text-primary ml-2">€${prezzoScontato}</span><span class="text-sm">/persona</span></div>
+                                    <span class="material-symbols-outlined text-tertiary">local_offer</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+            }).join('');
+        } catch (err) { console.error(err); }
+    }
+    loadDeals();
+</script>
+</body>
+</html>
