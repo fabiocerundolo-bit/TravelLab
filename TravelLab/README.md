@@ -151,7 +151,7 @@ I form compaiono in un overlay modale quando si clicca sui pulsanti dedicati. La
 ### 6.2 Clonare il repository
 
 ```bash
-git clone https://github.com/tuo-utente/TravelLab.git
+git clone https://github.com/fabiocerundolo-bit/TravelLab.git
 cd TravelLab
 ```
 
