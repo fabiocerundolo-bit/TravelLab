@@ -2,12 +2,12 @@
 
 ## 1. Introduzione
 
-TravelLab � una piattaforma web completa per un?agenzia di viaggi. Offre due interfacce:
+TravelLab è una piattaforma web completa per un?agenzia di viaggi. Offre due interfacce:
 
 - **Dashboard amministrativa** (accessibile su `/admin.html`) ? per gestire clienti, viaggi, prenotazioni, visualizzare statistiche.
 - **Sito pubblico "The Editorial Voyager"** (accessibile su `/index.html`) ? per presentare destinazioni, offerte e permettere ai clienti di prenotare viaggi.
 
-Il backend � realizzato in **C# con ASP.NET Core 8** e **Entity Framework Core** su database **PostgreSQL**. Il frontend utilizza **HTML/CSS/JavaScript vanilla** con **Tailwind CSS** per lo stile.
+Il backend è realizzato in **C# con ASP.NET Core 8** e **Entity Framework Core** su database **PostgreSQL**. Il frontend utilizza **HTML/CSS/JavaScript vanilla** con **Tailwind CSS** per lo stile.
 
 ---
 
@@ -94,7 +94,7 @@ Il database � descritto dallo script SQL `schema.sql` (presente nel repository
 ### 5.1 Dashboard amministrativa (`admin.html`)
 
 - **Layout**: sidebar + area principale con card statistiche.
-- **Funzionalit�**:
+- **Funzionalità**:
     - Visualizzazione clienti, viaggi, prenotazioni.
     - Creazione di nuovi clienti, viaggi, prenotazioni.
     - Ricerca voli per destinazione e date.
@@ -105,7 +105,7 @@ Il database � descritto dallo script SQL `schema.sql` (presente nel repository
 
 ### 5.2 Sito pubblico "The Editorial Voyager"
 
-Il sito � composto da pagine statiche ma **dinamiche** grazie alle chiamate AJAX alle API.
+Il sito è composto da pagine statiche ma **dinamiche** grazie alle chiamate AJAX alle API.
 
 #### Pagine:
 
@@ -190,9 +190,9 @@ Il sito � composto da pagine statiche ma **dinamiche** grazie alle chiamate AJ
 
 ## 9. Conclusione
 
-TravelLab � ora un progetto full?stack completo, con due interfacce distinte (admin e pubblica) che condividono lo stesso database e le stesse API. Il sito pubblico "The Editorial Voyager" � completamente integrato e permette ai visitatori di esplorare le destinazioni e prenotare viaggi in modo dinamico.
+TravelLab è ora un progetto full?stack completo, con due interfacce distinte (admin e pubblica) che condividono lo stesso database e le stesse API. Il sito pubblico "The Editorial Voyager" � completamente integrato e permette ai visitatori di esplorare le destinazioni e prenotare viaggi in modo dinamico.
 
-La documentazione � allineata con lo stato attuale del progetto e pu� essere utilizzata per manutenzione o ulteriori sviluppi.
+La documentazione è allineata con lo stato attuale del progetto e può essere utilizzata per manutenzione o ulteriori sviluppi.
 
 ---
 
