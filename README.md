@@ -1,4 +1,4 @@
-# TravelLab ? Documentazione di progetto (versione integrata)
+# TravelLab Documentazione di progetto (versione integrata)
 
 ## 1. Introduzione
 
