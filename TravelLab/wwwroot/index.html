@@ -3,26 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TravelLab - Dashboard Agenzia Viaggi</title>
+    <title>TravelLab | Dashboard Agenzia Viaggi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-    <h1>TravelLab - Dashboard Agenzia di Viaggi</h1>
-</header>
-<nav>
-    <button id="btn-clienti">📋 Elenco Clienti</button>
-    <button id="btn-prenotazioni-cliente">📅 Storico Prenotazioni Cliente</button>
-    <button id="btn-voli">✈️ Cerca Voli</button>
-    <button id="btn-top-dest">🏆 Top Destinazioni</button>
-    <button id="btn-ricavi">💰 Ricavi Mensili</button>
-    <button id="btn-clienti-senza">👤 Clienti senza prenotazioni</button>
-</nav>
-<main>
-    <div id="content">
-        <p>Seleziona un'opzione dal menu per visualizzare i dati.</p>
+<div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-plane-departure"></i>
+            <span>TravelLab</span>
+        </div>
+        <nav class="nav-menu">
+            <button class="nav-item" id="btn-clienti">
+                <i class="fas fa-users"></i> Clienti
+            </button>
+            <button class="nav-item" id="btn-prenotazioni-cliente">
+                <i class="fas fa-calendar-alt"></i> Storico Prenotazioni
+            </button>
+            <button class="nav-item" id="btn-voli">
+                <i class="fas fa-plane"></i> Cerca Voli
+            </button>
+            <button class="nav-item" id="btn-top-dest">
+                <i class="fas fa-trophy"></i> Top Destinazioni
+            </button>
+            <button class="nav-item" id="btn-ricavi">
+                <i class="fas fa-chart-line"></i> Ricavi Mensili
+            </button>
+            <button class="nav-item" id="btn-clienti-senza">
+                <i class="fas fa-user-slash"></i> Clienti senza prenotazioni
+            </button>
+            <div class="divider"></div>
+            <button class="nav-item" id="btn-nuovo-cliente">
+                <i class="fas fa-user-plus"></i> Nuovo Cliente
+            </button>
+            <button class="nav-item" id="btn-nuovo-viaggio">
+                <i class="fas fa-umbrella-beach"></i> Nuovo Viaggio
+            </button>
+            <button class="nav-item" id="btn-nuova-prenotazione">
+                <i class="fas fa-ticket-alt"></i> Nuova Prenotazione
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-bar">
+            <h1>Dashboard</h1>
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <i class="fas fa-user-friends"></i>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-clienti">0</span>
+                        <span class="stat-label">Clienti</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-prenotazioni">0</span>
+                        <span class="stat-label">Prenotazioni</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-euro-sign"></i>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-ricavi">0</span>
+                        <span class="stat-label">Ricavi totali</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-panel" id="content">
+            <div class="welcome-message">
+                <i class="fas fa-chart-pie"></i>
+                <h2>Benvenuto su TravelLab</h2>
+                <p>Seleziona una voce dal menu laterale per visualizzare i dati.</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Form container (modale) -->
+<div id="form-container" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-btn" id="close-form">&times;</span>
+        <div id="form-cliente" style="display: none;">
+            <h3>Nuovo Cliente</h3>
+            <form id="cliente-form" class="form-modal">
+                <input type="text" id="nome" placeholder="Nome" required>
+                <input type="text" id="cognome" placeholder="Cognome" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="tel" id="telefono" placeholder="Telefono">
+                <input type="text" id="indirizzo" placeholder="Indirizzo">
+                <button type="submit" class="btn-primary">Salva</button>
+            </form>
+        </div>
+        <div id="form-viaggio" style="display: none;">
+            <h3>Nuovo Viaggio</h3>
+            <form id="viaggio-form" class="form-modal">
+                <input type="text" id="descrizione" placeholder="Descrizione" required>
+                <input type="date" id="data_inizio" required>
+                <input type="date" id="data_fine" required>
+                <input type="text" id="destinazione" placeholder="Destinazione" required>
+                <input type="number" step="0.01" id="prezzo_base" placeholder="Prezzo base" required>
+                <button type="submit" class="btn-primary">Salva</button>
+            </form>
+        </div>
+        <div id="form-prenotazione" style="display: none;">
+            <h3>Nuova Prenotazione</h3>
+            <form id="prenotazione-form" class="form-modal">
+                <select id="cliente_id" required><option value="">Seleziona cliente</option></select>
+                <select id="viaggio_id" required><option value="">Seleziona viaggio</option></select>
+                <select id="agenzia_id" required><option value="">Seleziona agenzia</option></select>
+                <input type="date" id="data_prenotazione" required>
+                <select id="stato" required>
+                    <option value="Confermata">Confermata</option>
+                    <option value="In attesa">In attesa</option>
+                    <option value="Annullata">Annullata</option>
+                </select>
+                <button type="submit" class="btn-primary">Salva</button>
+            </form>
+        </div>
     </div>
-</main>
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>

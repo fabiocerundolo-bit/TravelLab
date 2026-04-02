@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TravelLab.Data;
 using TravelLab.Models;
 
-namespace AgenziaViaggiAPI.Controllers
+namespace TravelLab.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -20,8 +20,17 @@ namespace AgenziaViaggiAPI.Controllers
         public async Task<IActionResult> GetClienti()
         {
             var clienti = await _context.Clienti
-                .OrderBy(c => c.Id)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Nome,
+                    c.Cognome,
+                    c.Email,
+                    c.Telefono,
+                    c.Indirizzo
+                })
                 .ToListAsync();
+
             return Ok(clienti);
         }
 
@@ -33,6 +42,14 @@ namespace AgenziaViaggiAPI.Controllers
                 .Select(c => new { c.Id, c.Nome, c.Cognome, c.Email, c.Telefono })
                 .ToListAsync();
             return Ok(clienti);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateCliente([FromBody] Cliente cliente)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            _context.Clienti.Add(cliente);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetClienti), new { id = cliente.Id }, cliente);
         }
     }
 }

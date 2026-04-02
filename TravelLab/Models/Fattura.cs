@@ -11,7 +11,7 @@ public class Fattura
     public int PrenotazioneId { get; set; }
     public Prenotazione Prenotazione { get; set; }
 
-    [Column("data_emissione")]
+    [Column("data_emissione",TypeName = "timestamp without time zone")]
     public DateTime DataEmissione { get; set; }
 
     [Column("importo_totale")]

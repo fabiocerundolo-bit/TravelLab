@@ -24,5 +24,5 @@ public class Cliente
     [Column("indirizzo")]
     public string Indirizzo { get; set; }
 
-    public ICollection<Prenotazione> Prenotazioni { get; set; }
+    public ICollection<Prenotazione> Prenotazioni { get; set; } = new List<Prenotazione>();
 } 

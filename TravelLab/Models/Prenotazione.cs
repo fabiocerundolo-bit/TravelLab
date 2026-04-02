@@ -19,7 +19,7 @@ public class Prenotazione
     [Column("fk_agenzia")]
     public int AgenziaId { get; set; }
 
-    [Column("data_prenotazione")]
+    [Column("data_prenotazione", TypeName = "timestamp without time zone")]
     public DateTime DataPrenotazione { get; set; }
 
     [Column("stato")]

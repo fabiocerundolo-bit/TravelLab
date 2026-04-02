@@ -15,6 +15,7 @@ namespace TravelLab.Data
         public DbSet<Volo> Voli { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Biglietto> Biglietti { get; set; }
+        public DbSet<Agenzia> Agenzie { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

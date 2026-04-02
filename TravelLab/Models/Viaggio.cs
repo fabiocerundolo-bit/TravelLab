@@ -10,10 +10,10 @@ public class Viaggio
     [Column("descrizione")]
     public string Descrizione { get; set; }
 
-    [Column("data_inizio")]
+    [Column("data_inizio",TypeName = "timestamp without time zone")]
     public DateTime DataInizio { get; set; }
 
-    [Column("data_fine")]
+    [Column("data_fine",TypeName = "timestamp without time zone")]
     public DateTime DataFine { get; set; }
 
     [Column("destinazione")]
@@ -21,4 +21,5 @@ public class Viaggio
 
     [Column("prezzo_base")]
     public decimal PrezzoBase { get; set; }
+    
 }

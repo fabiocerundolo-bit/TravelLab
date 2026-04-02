@@ -1,17 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TravelLab.Data;
+using TravelLab.Models;
 
+namespace  TravelLab
+{
+    
+}
 [ApiController]
 [Route("api/[controller]")]
-public class VoliController : ControllerBase
+public class ViaggiController : ControllerBase
 {
     private readonly TravelLabContext _context;
-
-    public VoliController(TravelLabContext context)
-    {
-        _context = context;
-    }
+    public ViaggiController(TravelLabContext context) => _context = context;
 
     [HttpGet]
     public async Task<IActionResult> GetViaggi()
@@ -27,7 +28,16 @@ public class VoliController : ControllerBase
                 v.PrezzoBase
             })
             .ToListAsync();
-
         return Ok(viaggi);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateViaggio([FromBody] Viaggio viaggio)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        _context.Viaggi.Add(viaggio);
+        await _context.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetViaggi), new { id = viaggio.Id }, viaggio);
+    }
+    
 }
