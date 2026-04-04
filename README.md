@@ -190,7 +190,7 @@ Il sito è composto da pagine statiche ma **dinamiche** grazie alle chiamate AJA
 
 ## 9. Conclusione
 
-TravelLab è ora un progetto full?stack completo, con due interfacce distinte (admin e pubblica) che condividono lo stesso database e le stesse API. Il sito pubblico "The Editorial Voyager" � completamente integrato e permette ai visitatori di esplorare le destinazioni e prenotare viaggi in modo dinamico.
+TravelLab è ora un progetto full?stack completo, con due interfacce distinte (admin e pubblica) che condividono lo stesso database e le stesse API. Il sito pubblico "The Editorial Voyager" è completamente integrato e permette ai visitatori di esplorare le destinazioni e prenotare viaggi in modo dinamico.
 
 La documentazione è allineata con lo stato attuale del progetto e può essere utilizzata per manutenzione o ulteriori sviluppi.
 
