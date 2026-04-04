@@ -114,7 +114,7 @@ Il sito è composto da pagine statiche ma **dinamiche** grazie alle chiamate AJA
     - Sezione "Featured Signature Journeys" (primi 3 viaggi dal DB).
     - Griglia "Explore the Horizon" (prime 4 destinazioni uniche).
 - **`destinations.html`** ? Elenco completo di tutti i viaggi, con card che mostrano destinazione, descrizione e prezzo.
-- **`deals.html`** ? Offerte: mostra i 6 viaggi pi� economici, applicando uno sconto casuale (10-40%) e visualizzando il prezzo scontato.
+- **`deals.html`** ? Offerte: mostra i 6 viaggi più economici, applicando uno sconto casuale (10-40%) e visualizzando il prezzo scontato.
 - **`booking.html`** ? Form di prenotazione:
     - Popola il select delle destinazioni dai viaggi reali.
     - All?invio, cerca o crea il cliente (per email) e crea una prenotazione (con agenzia fissa id=1).
@@ -129,7 +129,7 @@ Il sito è composto da pagine statiche ma **dinamiche** grazie alle chiamate AJA
 ### 5.3 Gestione della navigazione
 
 - Il logo "The Editorial Voyager" punta a `index.html` (homepage pubblica).
-- La dashboard amministrativa � stata rinominata in `admin.html` per evitare conflitti.
+- La dashboard amministrativa è stata rinominata in `admin.html` per evitare conflitti.
 - I link nel menu superiore collegano correttamente le pagine tra loro.
 
 ---
