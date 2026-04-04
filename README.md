@@ -32,7 +32,7 @@ TravelLab/
 ```
 
 **Flusso dati:**  
-Browser ? Frontend (fetch) ? API ? Database ? Risposta JSON ? Renderizzazione.
+Browser --> Frontend (fetch) --> API --> Database --> Risposta JSON --> Renderizzazione.
 
 ---
 
