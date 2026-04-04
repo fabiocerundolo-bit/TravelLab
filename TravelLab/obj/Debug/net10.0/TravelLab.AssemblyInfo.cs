@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TravelLab")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e66f5a786874eaa85f4522f92fd17d9b73232e4d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+47066b2fbb8335839af29cff77e82a835e61a788")]
 [assembly: System.Reflection.AssemblyProductAttribute("TravelLab")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TravelLab")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
