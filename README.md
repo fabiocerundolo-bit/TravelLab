@@ -4,8 +4,8 @@
 
 TravelLab è una piattaforma web completa per un?agenzia di viaggi. Offre due interfacce:
 
-- **Dashboard amministrativa** (accessibile su `/admin.html`) ? per gestire clienti, viaggi, prenotazioni, visualizzare statistiche.
-- **Sito pubblico "The Editorial Voyager"** (accessibile su `/index.html`) ? per presentare destinazioni, offerte e permettere ai clienti di prenotare viaggi.
+- **Dashboard amministrativa** (accessibile su `/admin.html`) è per gestire clienti, viaggi, prenotazioni, visualizzare statistiche.
+- **Sito pubblico "The Editorial Voyager"** (accessibile su `/index.html`) è per presentare destinazioni, offerte e permettere ai clienti di prenotare viaggi.
 
 Il backend è realizzato in **C# con ASP.NET Core 8** e **Entity Framework Core** su database **PostgreSQL**. Il frontend utilizza **HTML/CSS/JavaScript vanilla** con **Tailwind CSS** per lo stile.
 
