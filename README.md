@@ -16,7 +16,7 @@ Il backend è realizzato in **C# con ASP.NET Core 8** e **Entity Framework Core*
 ```
 TravelLab/
 ??? Controllers/               # API REST
-??? Models/                    # Entit� e DTO
+??? Models/                    # Entità e DTO
 ??? Data/                      # DbContext
 ??? wwwroot/                   # File statici (frontend)
 ?   ??? admin.html             # Dashboard amministrativa
@@ -47,7 +47,7 @@ Il database � descritto dallo script SQL `schema.sql` (presente nel repository
 | `t_viaggi`       | Pacchetti turistici |
 | `t_prenotazioni` | Prenotazioni effettuate |
 | `t_fatture`      | Fatture |
-| `t_luoghi`       | Citt�, aeroporti, etc. |
+| `t_luoghi`       | Città, aeroporti, etc. |
 | `t_mezzi`        | Mezzi di trasporto |
 | `t_tratte`       | Percorsi e orari |
 | `t_servizi`      | Servizi aggiuntivi (hotel, voli) |
@@ -118,7 +118,7 @@ Il sito è composto da pagine statiche ma **dinamiche** grazie alle chiamate AJA
 - **`booking.html`** ? Form di prenotazione:
     - Popola il select delle destinazioni dai viaggi reali.
     - All?invio, cerca o crea il cliente (per email) e crea una prenotazione (con agenzia fissa id=1).
-- **`about.html`** ? Contenuto statico (chi siamo, team, sostenibilit�).
+- **`about.html`** ? Contenuto statico (chi siamo, team, sostenibilità).
 
 #### Note tecniche:
 
