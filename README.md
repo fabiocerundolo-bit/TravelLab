@@ -173,7 +173,7 @@ Il sito è composto da pagine statiche ma **dinamiche** grazie alle chiamate AJA
 | `Unexpected end of JSON input` | Verificare che l?endpoint `/api/clienti/by-email` esista e che la risposta sia JSON. Aggiungere il metodo nel controller. |
 | `tailwind is not defined` | Rimuovere lo script `tailwind.config.js` dalle pagine HTML (non serve nel browser). |
 | La home page mostra la dashboard | Rinominare la dashboard in `admin.html` e lasciare il nuovo `index.html` per il sito pubblico. |
-| Il booking fallisce perch� agenzia non trovata | Assicurarsi che esista un record in `t_agenzia` con `id_agenzia = 1`. |
+| Il booking fallisce perché agenzia non trovata | Assicurarsi che esista un record in `t_agenzia` con `id_agenzia = 1`. |
 | Le immagini non vengono caricate | Le immagini sono placeholder di Unsplash; funzionano online. In locale possono essere sostituite con URL validi. |
 
 ---
