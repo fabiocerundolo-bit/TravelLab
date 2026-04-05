@@ -16,10 +16,13 @@ namespace TravelLab.Data
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Biglietto> Biglietti { get; set; }
         public DbSet<Agenzia> Agenzie { get; set; }
+        public DbSet<Mezzo> Mezzi { get; set; }
+        public DbSet<Treno> Treni { get; set; }
+        public DbSet<Nave> Navi { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configurazioni relazioni
+            // Configurazioni esistenti
             modelBuilder.Entity<Prenotazione>()
                 .HasOne(p => p.Cliente)
                 .WithMany(c => c.Prenotazioni)
@@ -54,6 +57,19 @@ namespace TravelLab.Data
                 .HasOne(h => h.Servizio)
                 .WithOne(s => s.Hotel)
                 .HasForeignKey<Hotel>(h => h.ServizioId);
+
+            // Nuove configurazioni per Treno e Nave
+            modelBuilder.Entity<Treno>()
+                .HasOne(t => t.Servizio)
+                .WithOne(s => s.Treno)
+                .HasForeignKey<Treno>(t => t.IdServizio);
+
+            modelBuilder.Entity<Nave>()
+                .HasOne(n => n.Servizio)
+                .WithOne(s => s.Nave)
+                .HasForeignKey<Nave>(n => n.IdServizio);
+            modelBuilder.Entity<Treno>().HasKey(t => t.IdServizio);
+            modelBuilder.Entity<Nave>().HasKey(n => n.IdServizio);
         }
     }
 }

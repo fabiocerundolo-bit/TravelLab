@@ -18,5 +18,6 @@ public class Servizio
 
     public Volo Volo { get; set; }
     public Hotel Hotel { get; set; }
-    // Aggiungi Treno/Navi se presenti
+    public Treno Treno { get; set; }
+    public Nave Nave { get; set; }
 }

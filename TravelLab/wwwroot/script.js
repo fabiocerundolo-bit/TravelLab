@@ -40,7 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const tr = document.createElement('tr');
             columns.forEach(col => {
                 const td = document.createElement('td');
-                td.textContent = row[col] !== null && row[col] !== undefined ? row[col] : '';
+                let value = row[col] !== null && row[col] !== undefined ? row[col] : '';
+                // Formatta le date ISO (YYYY-MM-DDTHH:MM:SS) in solo YYYY-MM-DD
+                if (typeof value === 'string' && value.match(/^\d{4}-\d{2}-\d{2}T/)) {
+                    value = value.split('T')[0];
+                }
+                td.textContent = value;
                 tr.appendChild(td);
             });
             tbody.appendChild(tr);
@@ -53,32 +58,34 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadStats() {
         try {
             const clientiRes = await fetch('/api/clienti');
-            console.log('Clienti status:', clientiRes.status);
             if (clientiRes.ok) {
                 const clienti = await clientiRes.json();
-                console.log('Clienti count:', clienti.length);
                 document.getElementById('stat-clienti').innerText = clienti.length;
+            } else {
+                document.getElementById('stat-clienti').innerText = '?';
             }
 
             const prenotazioniCountRes = await fetch('/api/prenotazioni/count');
-            console.log('Prenotazioni status:', prenotazioniCountRes.status);
             if (prenotazioniCountRes.ok) {
                 const data = await prenotazioniCountRes.json();
-                console.log('Prenotazioni count:', data.count);
                 document.getElementById('stat-prenotazioni').innerText = data.count;
+            } else {
+                document.getElementById('stat-prenotazioni').innerText = '?';
             }
 
             const ricaviRes = await fetch('/api/statistiche/ricavi-mensili');
-            console.log('Ricavi status:', ricaviRes.status);
             if (ricaviRes.ok) {
                 const ricaviMensili = await ricaviRes.json();
-                console.log('Ricavi mensili:', ricaviMensili);
-                const totale = ricaviMensili.reduce((sum, item) => sum + item.ricavoTotale, 0);
-                console.log('Totale ricavi:', totale);
+                const totale = ricaviMensili.reduce((sum, item) => sum + (item.ricavoTotale || 0), 0);
                 document.getElementById('stat-ricavi').innerText = totale.toFixed(2);
+            } else {
+                document.getElementById('stat-ricavi').innerText = '?';
             }
         } catch (err) {
             console.error('Errore caricamento statistiche:', err);
+            document.getElementById('stat-clienti').innerText = '!';
+            document.getElementById('stat-prenotazioni').innerText = '!';
+            document.getElementById('stat-ricavi').innerText = '!';
         }
     }
 
@@ -99,6 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeModal.addEventListener('click', () => {
         modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) modal.style.display = 'none';
     });
 
     // --- Eventi sidebar ---
@@ -137,6 +148,15 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchData('/api/clienti/senza-prenotazioni', buildTableFromData);
     });
 
+    // --- NUOVI PULSANTI PER TRENI E NAVI ---
+    document.getElementById('btn-treni')?.addEventListener('click', () => {
+        fetchData('/api/treni', buildTableFromData);
+    });
+    document.getElementById('btn-navi')?.addEventListener('click', () => {
+        fetchData('/api/navi', buildTableFromData);
+    });
+
+    // --- Pulsanti per form ---
     document.getElementById('btn-nuovo-cliente').addEventListener('click', () => {
         showModal(formClienteDiv);
     });
@@ -146,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('btn-nuova-prenotazione').addEventListener('click', async () => {
-        // Popola i select prima di mostrare il modale
         await populateSelects();
         showModal(formPrenotazioneDiv);
     });
@@ -165,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const viaggioSelect = document.getElementById('viaggio_id');
         viaggioSelect.innerHTML = '<option value="">Seleziona viaggio</option>';
         viaggi.forEach(v => {
-            viaggioSelect.innerHTML += `<option value="${v.id}">${v.destinazione} (${v.dataInizio} - ${v.dataFine})</option>`;
+            viaggioSelect.innerHTML += `<option value="${v.id}">${v.destinazione} (${v.dataInizio?.split('T')[0]} - ${v.dataFine?.split('T')[0]})</option>`;
         });
 
         const agenzieRes = await fetch('/api/agenzie');
@@ -177,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Submit forms (stessi listener di prima)
+    // Submit forms
     document.getElementById('cliente-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const data = {
@@ -197,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Cliente aggiunto con successo!');
                 modal.style.display = 'none';
                 e.target.reset();
-                loadStats(); // aggiorna contatore clienti
+                loadStats();
             } else {
                 const error = await res.text();
                 alert('Errore: ' + error);
@@ -254,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Prenotazione aggiunta con successo!');
                 modal.style.display = 'none';
                 e.target.reset();
-                loadStats(); // aggiorna contatore prenotazioni e ricavi
+                loadStats();
             } else {
                 const error = await res.text();
                 alert('Errore: ' + error);
@@ -264,6 +283,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Carica statistiche iniziali
     loadStats();
 });

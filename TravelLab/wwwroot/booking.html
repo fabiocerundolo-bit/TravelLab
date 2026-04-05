@@ -38,6 +38,20 @@
                 <div><label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Preferred destination</label><select id="destination" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary" required></select></div>
                 <div><label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Travel dates (approx)</label><input type="text" id="travel_dates" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary" placeholder="e.g., Sep 2024" required></div>
                 <div><label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Number of travelers</label><input type="number" id="travelers" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary" placeholder="2" required></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Treno</label>
+                        <select id="treno_id" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary">
+                            <option value="">Nessun treno</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Nave</label>
+                        <select id="nave_id" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary">
+                            <option value="">Nessuna nave</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div><label class="block text-xs uppercase tracking-wider font-bold text-secondary mb-2">Special requests or preferences</label><textarea id="requests" rows="4" class="w-full border border-outline-variant rounded-sm p-3 focus:ring-1 focus:ring-primary" placeholder="Dietary restrictions, hotel preferences, must-see experiences..."></textarea></div>
             <div><button type="submit" class="w-full bg-primary text-on-primary py-4 text-sm uppercase tracking-wider font-bold rounded-sm hover:opacity-90 transition">Submit Inquiry →</button></div>
@@ -74,6 +88,34 @@
         } catch (err) {
             console.error('Errore destinazioni:', err);
             alert('Impossibile caricare le destinazioni. Verifica che il backend sia in esecuzione su http://localhost:5070');
+        }
+    }
+    async function populateTrainsAndShips() {
+        try {
+            // Treni
+            const treniRes = await fetch('/api/treni');
+            if (treniRes.ok) {
+                const treni = await treniRes.json();
+                const trenoSelect = document.getElementById('treno_id');
+                trenoSelect.innerHTML = '<option value="">Nessun treno</option>';
+                treni.forEach(t => {
+                    const prezzo = t.prezzoBase || 50;
+                    trenoSelect.innerHTML += `<option value="${t.id_servizio}">${t.numero_treno} - ${t.compagnia || 'Treno'} (€${prezzo})</option>`;
+                });
+            }
+            // Navi
+            const naviRes = await fetch('/api/navi');
+            if (naviRes.ok) {
+                const navi = await naviRes.json();
+                const naveSelect = document.getElementById('nave_id');
+                naveSelect.innerHTML = '<option value="">Nessuna nave</option>';
+                navi.forEach(n => {
+                    const prezzo = n.prezzoBase || 200;
+                    naveSelect.innerHTML += `<option value="${n.id_servizio}">${n.nome_nave} - ${n.compagnia || 'Nave'} (€${prezzo})</option>`;
+                });
+            }
+        } catch (err) {
+            console.error('Errore caricamento treni/navi:', err);
         }
     }
 
@@ -145,6 +187,7 @@
     });
 
     populateDestinations();
+    populateTrainsAndShips();
 </script>
 </body>
 </html>
