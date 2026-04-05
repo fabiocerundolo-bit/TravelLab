@@ -140,7 +140,7 @@ Il sito è composto da pagine statiche ma **dinamiche** grazie alle chiamate AJA
 
 - .NET SDK 8
 - PostgreSQL (locale o remoto)
-- (Opzionale) Node.js ? non necessario, solo per sviluppo Tailwind
+- (Opzionale) Node.js non necessario, solo per sviluppo Tailwind
 
 ### Passi
 
