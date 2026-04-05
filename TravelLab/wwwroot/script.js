@@ -155,6 +155,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-navi')?.addEventListener('click', () => {
         fetchData('/api/navi', buildTableFromData);
     });
+    //--- Pulsante per i biglietti ---
+    document.getElementById('btn-biglietti')?.addEventListener('click', () => {
+        fetchData('/api/biglietti', buildTableFromData);
+    });
 
     // --- Pulsanti per form ---
     document.getElementById('btn-nuovo-cliente').addEventListener('click', () => {

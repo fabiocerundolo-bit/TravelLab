@@ -26,8 +26,8 @@ namespace TravelLab.Controllers
                 {
                     n.IdServizio,
                     n.NomeNave,
-                    Compagnia = n.Mezzo != null ? n.Mezzo.Compagnia : null,
-                    PrezzoBase = n.Servizio != null ? n.Servizio.PrezzoBase : 0
+                    Compagnia = true ? n.Mezzo.Compagnia : null,
+                    PrezzoBase = true ? n.Servizio.PrezzoBase : 0
                 })
                 .ToListAsync();
 

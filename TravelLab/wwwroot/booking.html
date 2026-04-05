@@ -92,26 +92,30 @@
     }
     async function populateTrainsAndShips() {
         try {
-            // Treni
             const treniRes = await fetch('/api/treni');
             if (treniRes.ok) {
                 const treni = await treniRes.json();
                 const trenoSelect = document.getElementById('treno_id');
                 trenoSelect.innerHTML = '<option value="">Nessun treno</option>';
                 treni.forEach(t => {
-                    const prezzo = t.prezzoBase || 50;
-                    trenoSelect.innerHTML += `<option value="${t.id_servizio}">${t.numero_treno} - ${t.compagnia || 'Treno'} (€${prezzo})</option>`;
+                    const idServ = t.IdServizio || t.id_servizio; // supporto sia Pascal che snake
+                    const numero = t.NumeroTreno || t.numero_treno || `Treno ${idServ}`;
+                    const compagnia = t.Compagnia || t.compagnia || 'Treno';
+                    const prezzo = t.PrezzoBase || t.prezzo_base || 50;
+                    trenoSelect.innerHTML += `<option value="${idServ}"> ${compagnia} (€${prezzo})</option>`;
                 });
             }
-            // Navi
             const naviRes = await fetch('/api/navi');
             if (naviRes.ok) {
                 const navi = await naviRes.json();
                 const naveSelect = document.getElementById('nave_id');
                 naveSelect.innerHTML = '<option value="">Nessuna nave</option>';
                 navi.forEach(n => {
-                    const prezzo = n.prezzoBase || 200;
-                    naveSelect.innerHTML += `<option value="${n.id_servizio}">${n.nome_nave} - ${n.compagnia || 'Nave'} (€${prezzo})</option>`;
+                    const idServ = n.IdServizio || n.id_servizio;
+                    const nome = n.NomeNave || n.nome_nave || `Nave ${idServ}`;
+                    const compagnia = n.Compagnia || n.compagnia || 'Nave';
+                    const prezzo = n.PrezzoBase || n.prezzo_base || 200;
+                    naveSelect.innerHTML += `<option value="${idServ}">${compagnia} (€${prezzo})</option>`;
                 });
             }
         } catch (err) {

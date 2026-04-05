@@ -1,6 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using TravelLab.Data;
+using System.Text.Json;
+using Microsoft.AspNetCore.Http.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+
 
 app.UseHttpsRedirection();
 

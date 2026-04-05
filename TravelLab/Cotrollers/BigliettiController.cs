@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TravelLab.Data;
 using TravelLab.Models;
 
@@ -14,6 +15,8 @@ namespace TravelLab.Controllers
         {
             _context = context;
         }
+        
+        
 
         // Endpoint per creare un biglietto treno
         [HttpPost("treno")]
@@ -44,6 +47,7 @@ namespace TravelLab.Controllers
 
             return Ok(biglietto);
         }
+        
 
         // Endpoint per creare un biglietto nave
         [HttpPost("nave")]
@@ -72,5 +76,27 @@ namespace TravelLab.Controllers
 
             return Ok(biglietto);
         }
+        [HttpGet]
+        [HttpGet]
+        public async Task<IActionResult> GetAllBiglietti()
+        {
+            var biglietti = await _context.Biglietti
+                .Include(b => b.Prenotazione)
+                .ThenInclude(p => p.Cliente)
+                .Include(b => b.Servizio)
+                .Select(b => new
+                {
+                    b.Id,
+                    b.PrenotazioneId,
+                    Cliente = b.Prenotazione != null ? b.Prenotazione.Cliente.Nome + " " + b.Prenotazione.Cliente.Cognome : null,
+                    ServizioTipo = b.Servizio != null ? b.Servizio.TipoServizio : null,
+                    PrezzoEffettivo = Math.Round(b.PrezzoEffettivo, 2)   // 👈 arrotonda a 2 decimali
+                })
+                .ToListAsync();
+
+            return Ok(biglietti);
+        }
+        
+        
     }
 }
