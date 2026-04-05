@@ -80,7 +80,7 @@ Il database � descritto dallo script SQL `schema.sql` (presente nel repository
 
 ### DTO utilizzati
 
-- `CreatePrenotazioneDto` ? per ricevere i dati di una nuova prenotazione senza cicli di navigazione.
+- `CreatePrenotazioneDto`  per ricevere i dati di una nuova prenotazione senza cicli di navigazione.
 
 ### Gestione errori
 
@@ -109,16 +109,16 @@ Il sito è composto da pagine statiche ma **dinamiche** grazie alle chiamate AJA
 
 #### Pagine:
 
-- **`index.html`** ? Homepage:
+- **`index.html`**  Homepage:
     - Hero section con ricerca (statica).
     - Sezione "Featured Signature Journeys" (primi 3 viaggi dal DB).
     - Griglia "Explore the Horizon" (prime 4 destinazioni uniche).
-- **`destinations.html`** ? Elenco completo di tutti i viaggi, con card che mostrano destinazione, descrizione e prezzo.
-- **`deals.html`** ? Offerte: mostra i 6 viaggi più economici, applicando uno sconto casuale (10-40%) e visualizzando il prezzo scontato.
-- **`booking.html`** ? Form di prenotazione:
+- **`destinations.html`** Elenco completo di tutti i viaggi, con card che mostrano destinazione, descrizione e prezzo.
+- **`deals.html`**  Offerte: mostra i 6 viaggi più economici, applicando uno sconto casuale (10-40%) e visualizzando il prezzo scontato.
+- **`booking.html`**  Form di prenotazione:
     - Popola il select delle destinazioni dai viaggi reali.
     - All?invio, cerca o crea il cliente (per email) e crea una prenotazione (con agenzia fissa id=1).
-- **`about.html`** ? Contenuto statico (chi siamo, team, sostenibilità).
+- **`about.html`**  Contenuto statico (chi siamo, team, sostenibilità).
 
 #### Note tecniche:
 
