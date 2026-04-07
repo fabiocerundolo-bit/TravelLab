@@ -233,7 +233,7 @@ Certamente! Ecco un aggiornamento della documentazione del progetto **TravelLab*
 
 ---
 
-## Aggiornamento Documentazione TravelLab
+## Aggiornamento
 
 ### 1. Funzionalità Biglietti (Dashboard)
 
