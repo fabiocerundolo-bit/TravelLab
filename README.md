@@ -385,5 +385,3 @@ Per confermare il corretto funzionamento:
 ---
 
 **Documentazione aggiornata al:** 7 aprile 2026
-
-Se servono ulteriori chiarimenti o si desidera estendere la documentazione ad altri moduli (es. Clienti, Voli, Statistiche), è possibile richiederlo.
