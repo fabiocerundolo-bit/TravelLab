@@ -1,12 +1,14 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TravelLab.Models;
 
 namespace TravelLab.Data
 {
-    public class TravelLabContext : DbContext
+    public class TravelLabContext : IdentityDbContext<ApplicationUser>   // ← cambiato
     {
         public TravelLabContext(DbContextOptions<TravelLabContext> options) : base(options) { }
 
+        // I tuoi DbSet esistenti (sono ancora validi)
         public DbSet<Cliente> Clienti { get; set; }
         public DbSet<Viaggio> Viaggi { get; set; }
         public DbSet<Prenotazione> Prenotazioni { get; set; }
@@ -22,11 +24,24 @@ namespace TravelLab.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configurazioni esistenti
+            base.OnModelCreating(modelBuilder);   // ← necessario per Identity
+
+            // Tutte le tue configurazioni esistenti (le ho riportate)
             modelBuilder.Entity<Prenotazione>()
                 .HasOne(p => p.Cliente)
                 .WithMany(c => c.Prenotazioni)
                 .HasForeignKey(p => p.ClienteId);
+            modelBuilder.Entity<Prenotazione>(entity =>
+            {
+                entity.ToTable("t_prenotazioni");
+                entity.HasKey(e => e.Id);
+                entity.HasOne(e => e.Viaggio)
+                    .WithMany()
+                    .HasForeignKey(e => e.ViaggioId);
+                entity.HasOne(e => e.Cliente)
+                    .WithMany()
+                    .HasForeignKey(e => e.ClienteId);
+            });
 
             modelBuilder.Entity<Prenotazione>()
                 .HasOne(p => p.Viaggio)
@@ -58,7 +73,7 @@ namespace TravelLab.Data
                 .WithOne(s => s.Hotel)
                 .HasForeignKey<Hotel>(h => h.ServizioId);
 
-            // Nuove configurazioni per Treno e Nave
+            // Configurazioni per Treno e Nave
             modelBuilder.Entity<Treno>()
                 .HasOne(t => t.Servizio)
                 .WithOne(s => s.Treno)
@@ -68,6 +83,8 @@ namespace TravelLab.Data
                 .HasOne(n => n.Servizio)
                 .WithOne(s => s.Nave)
                 .HasForeignKey<Nave>(n => n.IdServizio);
+
+            // Chiavi primarie (già definite con [Key] nei modelli, ma utili)
             modelBuilder.Entity<Treno>().HasKey(t => t.IdServizio);
             modelBuilder.Entity<Nave>().HasKey(n => n.IdServizio);
         }

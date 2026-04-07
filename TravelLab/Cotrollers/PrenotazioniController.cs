@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TravelLab.Data;
@@ -5,6 +6,7 @@ using TravelLab.Models;
 
 namespace TravelLab.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PrenotazioniController : ControllerBase
@@ -87,18 +89,30 @@ namespace TravelLab.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllPrenotazioni()
         {
-            var prenotazioni = await _context.Prenotazioni
-                .Select(p => new
+            var query = from p in _context.Prenotazioni
+                join v in _context.Viaggi on p.ViaggioId equals v.Id
+                join c in _context.Clienti on p.ClienteId equals c.Id
+                select new
                 {
                     p.Id,
                     p.ClienteId,
+                    ClienteNome = c.Nome,
+                    ClienteCognome = c.Cognome,
                     p.ViaggioId,
+                    Destinazione = v.Destinazione,
+                    DataInizio = v.DataInizio,
+                    DataFine = v.DataFine,
                     p.AgenziaId,
                     p.DataPrenotazione,
                     p.Stato
-                })
-                .ToListAsync();
+                };
+
+            var prenotazioni = await query.ToListAsync();
             return Ok(prenotazioni);
         }
+        
+
+        
+        
     }
 }

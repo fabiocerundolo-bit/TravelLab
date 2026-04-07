@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TravelLab.Data;
@@ -5,6 +6,7 @@ using TravelLab.Models;
 
 namespace TravelLab.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class NaviController : ControllerBase

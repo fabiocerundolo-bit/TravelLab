@@ -1,8 +1,29 @@
+// script.js - Dashboard amministrativa TravelLab
+// Include autenticazione, fetch con credenziali, formattazione date
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Funzione generica per fetch e visualizzazione
+    // ------------------------------
+    // Configurazione fetch per includere i cookie di autenticazione
+    // ------------------------------
+    const originalFetch = window.fetch;
+    window.fetch = function(url, options) {
+        options = options || {};
+        options.credentials = 'include';
+        return originalFetch(url, options);
+    };
+
+    // ------------------------------
+    // Funzione generica per fetch e visualizzazione tabellare
+    // ------------------------------
     async function fetchData(url, buildTable) {
+        let response;
         try {
-            const response = await fetch(url);
+            response = await fetch(url);
+            if (response.status === 401) {
+                // Non autenticato: reindirizza al login
+                window.location.href = '/login.html';
+                return;
+            }
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
             const contentDiv = document.getElementById('content');
@@ -21,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ------------------------------
+    // Costruisce una tabella HTML da un array di oggetti, formattando le date
+    // ------------------------------
     function buildTableFromData(data) {
         const table = document.createElement('table');
         const thead = document.createElement('thead');
@@ -54,28 +78,35 @@ document.addEventListener('DOMContentLoaded', () => {
         return table;
     }
 
-    // --- Caricamento statistiche dashboard ---
+    // ------------------------------
+    // Caricamento statistiche dashboard (card)
+    // ------------------------------
     async function loadStats() {
+        let response;
         try {
-            const clientiRes = await fetch('/api/clienti');
-            if (clientiRes.ok) {
-                const clienti = await clientiRes.json();
+            response = await fetch('/api/clienti');
+            if (response.status === 401) {
+                window.location.href = '/login.html';
+                return;
+            }
+            if (response.ok) {
+                const clienti = await response.json();
                 document.getElementById('stat-clienti').innerText = clienti.length;
             } else {
                 document.getElementById('stat-clienti').innerText = '?';
             }
 
-            const prenotazioniCountRes = await fetch('/api/prenotazioni/count');
-            if (prenotazioniCountRes.ok) {
-                const data = await prenotazioniCountRes.json();
+            response = await fetch('/api/prenotazioni/count');
+            if (response.ok) {
+                const data = await response.json();
                 document.getElementById('stat-prenotazioni').innerText = data.count;
             } else {
                 document.getElementById('stat-prenotazioni').innerText = '?';
             }
 
-            const ricaviRes = await fetch('/api/statistiche/ricavi-mensili');
-            if (ricaviRes.ok) {
-                const ricaviMensili = await ricaviRes.json();
+            response = await fetch('/api/statistiche/ricavi-mensili');
+            if (response.ok) {
+                const ricaviMensili = await response.json();
                 const totale = ricaviMensili.reduce((sum, item) => sum + (item.ricavoTotale || 0), 0);
                 document.getElementById('stat-ricavi').innerText = totale.toFixed(2);
             } else {
@@ -89,7 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Gestione modale form ---
+    // ------------------------------
+    // Gestione modale per i form di inserimento
+    // ------------------------------
     const modal = document.getElementById('form-container');
     const formClienteDiv = document.getElementById('form-cliente');
     const formViaggioDiv = document.getElementById('form-viaggio');
@@ -104,26 +137,30 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'flex';
     }
 
-    closeModal.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
+    if (closeModal) {
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
 
     window.addEventListener('click', (e) => {
         if (e.target === modal) modal.style.display = 'none';
     });
 
-    // --- Eventi sidebar ---
-    document.getElementById('btn-clienti').addEventListener('click', () => {
+    // ------------------------------
+    // Eventi sidebar (pulsanti di visualizzazione)
+    // ------------------------------
+    document.getElementById('btn-clienti')?.addEventListener('click', () => {
         fetchData('/api/clienti', buildTableFromData);
     });
 
-    document.getElementById('btn-prenotazioni-cliente').addEventListener('click', () => {
+    document.getElementById('btn-prenotazioni-cliente')?.addEventListener('click', () => {
         const clienteId = prompt('Inserisci ID cliente:');
         if (!clienteId) return;
         fetchData(`/api/prenotazioni/cliente/${clienteId}`, buildTableFromData);
     });
 
-    document.getElementById('btn-voli').addEventListener('click', () => {
+    document.getElementById('btn-voli')?.addEventListener('click', () => {
         const destinazione = prompt('Destinazione (lasciare vuoto per tutte):');
         const dataInizio = prompt('Data inizio (YYYY-MM-DD, opzionale):');
         const dataFine = prompt('Data fine (YYYY-MM-DD, opzionale):');
@@ -136,72 +173,91 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchData(url, buildTableFromData);
     });
 
-    document.getElementById('btn-top-dest').addEventListener('click', () => {
+    document.getElementById('btn-top-dest')?.addEventListener('click', () => {
         fetchData('/api/statistiche/top-destinazioni', buildTableFromData);
     });
 
-    document.getElementById('btn-ricavi').addEventListener('click', () => {
+    document.getElementById('btn-ricavi')?.addEventListener('click', () => {
         fetchData('/api/statistiche/ricavi-mensili', buildTableFromData);
     });
 
-    document.getElementById('btn-clienti-senza').addEventListener('click', () => {
+    document.getElementById('btn-clienti-senza')?.addEventListener('click', () => {
         fetchData('/api/clienti/senza-prenotazioni', buildTableFromData);
     });
 
-    // --- NUOVI PULSANTI PER TRENI E NAVI ---
     document.getElementById('btn-treni')?.addEventListener('click', () => {
         fetchData('/api/treni', buildTableFromData);
     });
+    document.getElementById('btn-biglietti')?.addEventListener('click', () => {
+        loadTickets();
+    });
+
     document.getElementById('btn-navi')?.addEventListener('click', () => {
         fetchData('/api/navi', buildTableFromData);
     });
-    //--- Pulsante per i biglietti ---
-    document.getElementById('btn-biglietti')?.addEventListener('click', () => {
-        fetchData('/api/biglietti', buildTableFromData);
-    });
 
-    // --- Pulsanti per form ---
-    document.getElementById('btn-nuovo-cliente').addEventListener('click', () => {
+    // ------------------------------
+    // Pulsanti per aprire i form di inserimento (modale)
+    // ------------------------------
+    document.getElementById('btn-nuovo-cliente')?.addEventListener('click', () => {
         showModal(formClienteDiv);
     });
 
-    document.getElementById('btn-nuovo-viaggio').addEventListener('click', () => {
+    document.getElementById('btn-nuovo-viaggio')?.addEventListener('click', () => {
         showModal(formViaggioDiv);
     });
 
-    document.getElementById('btn-nuova-prenotazione').addEventListener('click', async () => {
+    document.getElementById('btn-nuova-prenotazione')?.addEventListener('click', async () => {
         await populateSelects();
         showModal(formPrenotazioneDiv);
     });
 
+    // ------------------------------
+    // Popola i select del form prenotazione (clienti, viaggi, agenzie)
+    // ------------------------------
     async function populateSelects() {
-        const clientiRes = await fetch('/api/clienti');
-        const clienti = await clientiRes.json();
-        const clienteSelect = document.getElementById('cliente_id');
-        clienteSelect.innerHTML = '<option value="">Seleziona cliente</option>';
-        clienti.forEach(c => {
-            clienteSelect.innerHTML += `<option value="${c.id}">${c.nome} ${c.cognome}</option>`;
-        });
+        let response;
+        try {
+            response = await fetch('/api/clienti');
+            if (response.ok) {
+                const clienti = await response.json();
+                const clienteSelect = document.getElementById('cliente_id');
+                clienteSelect.innerHTML = '<option value="">Seleziona cliente</option>';
+                clienti.forEach(c => {
+                    clienteSelect.innerHTML += `<option value="${c.id}">${c.nome} ${c.cognome}</option>`;
+                });
+            }
 
-        const viaggiRes = await fetch('/api/viaggi');
-        const viaggi = await viaggiRes.json();
-        const viaggioSelect = document.getElementById('viaggio_id');
-        viaggioSelect.innerHTML = '<option value="">Seleziona viaggio</option>';
-        viaggi.forEach(v => {
-            viaggioSelect.innerHTML += `<option value="${v.id}">${v.destinazione} (${v.dataInizio?.split('T')[0]} - ${v.dataFine?.split('T')[0]})</option>`;
-        });
+            response = await fetch('/api/viaggi');
+            if (response.ok) {
+                const viaggi = await response.json();
+                const viaggioSelect = document.getElementById('viaggio_id');
+                viaggioSelect.innerHTML = '<option value="">Seleziona viaggio</option>';
+                viaggi.forEach(v => {
+                    const start = v.dataInizio?.split('T')[0] || v.dataInizio;
+                    const end = v.dataFine?.split('T')[0] || v.dataFine;
+                    viaggioSelect.innerHTML += `<option value="${v.id}">${v.destinazione} (${start} - ${end})</option>`;
+                });
+            }
 
-        const agenzieRes = await fetch('/api/agenzie');
-        const agenzie = await agenzieRes.json();
-        const agenziaSelect = document.getElementById('agenzia_id');
-        agenziaSelect.innerHTML = '<option value="">Seleziona agenzia</option>';
-        agenzie.forEach(a => {
-            agenziaSelect.innerHTML += `<option value="${a.id}">${a.nome}</option>`;
-        });
+            response = await fetch('/api/agenzie');
+            if (response.ok) {
+                const agenzie = await response.json();
+                const agenziaSelect = document.getElementById('agenzia_id');
+                agenziaSelect.innerHTML = '<option value="">Seleziona agenzia</option>';
+                agenzie.forEach(a => {
+                    agenziaSelect.innerHTML += `<option value="${a.id}">${a.nome}</option>`;
+                });
+            }
+        } catch (err) {
+            console.error('Errore nel popolamento dei select:', err);
+        }
     }
 
-    // Submit forms
-    document.getElementById('cliente-form').addEventListener('submit', async (e) => {
+    // ------------------------------
+    // Submit forms (creazione clienti, viaggi, prenotazioni)
+    // ------------------------------
+    document.getElementById('cliente-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const data = {
             nome: document.getElementById('nome').value,
@@ -210,19 +266,20 @@ document.addEventListener('DOMContentLoaded', () => {
             telefono: document.getElementById('telefono').value,
             indirizzo: document.getElementById('indirizzo').value
         };
+        let response;
         try {
-            const res = await fetch('/api/clienti', {
+            response = await fetch('/api/clienti', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            if (res.ok) {
+            if (response.ok) {
                 alert('Cliente aggiunto con successo!');
                 modal.style.display = 'none';
                 e.target.reset();
                 loadStats();
             } else {
-                const error = await res.text();
+                const error = await response.text();
                 alert('Errore: ' + error);
             }
         } catch (err) {
@@ -230,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.getElementById('viaggio-form').addEventListener('submit', async (e) => {
+    document.getElementById('viaggio-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const data = {
             descrizione: document.getElementById('descrizione').value,
@@ -239,18 +296,19 @@ document.addEventListener('DOMContentLoaded', () => {
             destinazione: document.getElementById('destinazione').value,
             prezzoBase: parseFloat(document.getElementById('prezzo_base').value)
         };
+        let response;
         try {
-            const res = await fetch('/api/viaggi', {
+            response = await fetch('/api/viaggi', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            if (res.ok) {
+            if (response.ok) {
                 alert('Viaggio aggiunto con successo!');
                 modal.style.display = 'none';
                 e.target.reset();
             } else {
-                const error = await res.text();
+                const error = await response.text();
                 alert('Errore: ' + error);
             }
         } catch (err) {
@@ -258,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.getElementById('prenotazione-form').addEventListener('submit', async (e) => {
+    document.getElementById('prenotazione-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const data = {
             clienteId: parseInt(document.getElementById('cliente_id').value),
@@ -267,19 +325,20 @@ document.addEventListener('DOMContentLoaded', () => {
             dataPrenotazione: document.getElementById('data_prenotazione').value,
             stato: document.getElementById('stato').value
         };
+        let response;
         try {
-            const res = await fetch('/api/prenotazioni', {
+            response = await fetch('/api/prenotazioni', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            if (res.ok) {
+            if (response.ok) {
                 alert('Prenotazione aggiunta con successo!');
                 modal.style.display = 'none';
                 e.target.reset();
                 loadStats();
             } else {
-                const error = await res.text();
+                const error = await response.text();
                 alert('Errore: ' + error);
             }
         } catch (err) {
@@ -287,5 +346,73 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // ------------------------------
+    // Pulsante Logout
+    // ------------------------------
+    document.getElementById('btn-logout')?.addEventListener('click', async () => {
+        let response;
+        try {
+            response = await fetch('/api/account/logout', { method: 'POST' });
+            if (response.ok) {
+                window.location.href = '/login.html';
+            } else {
+                alert('Errore durante il logout');
+            }
+        } catch (err) {
+            alert('Errore di connessione');
+        }
+    });
+    // ------------------------------
+// Caricamento biglietti (esempio con endpoint /api/biglietti)
+// ------------------------------
+    // ------------------------------
+// Caricamento biglietti (prenotazioni con dettagli viaggio)
+// ------------------------------
+    async function loadTickets() {
+        const contentDiv = document.getElementById('content');
+        if (!contentDiv) return;
+
+        contentDiv.innerHTML = '<p>Caricamento biglietti...</p>';
+        let response;
+        try {
+            response = await fetch('/api/prenotazioni'); // o l'endpoint corretto
+            if (response.status === 401) {
+                window.location.href = '/login.html';
+                return;
+            }
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+            const data = await response.json();
+            console.log('Dati ricevuti:', data); // per debug: controlla la struttura
+
+            if (!data || data.length === 0) {
+                contentDiv.innerHTML = '<p>Nessun biglietto trovato.</p>';
+                return;
+            }
+
+            // Adattamento per la struttura piatta (senza oggetti annidati)
+            const enhancedData = data.map(p => ({
+                'ID Prenotazione': p.id,
+                'Cliente': p.clienteNome ? `${p.clienteNome} ${p.clienteCognome}` : p.clienteId,
+                'Destinazione': p.destinazione || 'N/D',
+                'Data partenza': p.dataInizio ? p.dataInizio.split('T')[0] : '',
+                'Data rientro': p.dataFine ? p.dataFine.split('T')[0] : '',
+                'Stato': p.stato,
+                'Data prenotazione': p.dataPrenotazione ? p.dataPrenotazione.split('T')[0] : ''
+            }));
+
+            const table = buildTableFromData(enhancedData);
+            contentDiv.innerHTML = '';
+            contentDiv.appendChild(table);
+
+        } catch (error) {
+            console.error('Errore loadTickets:', error);
+            contentDiv.innerHTML = `<p style="color:red;">Errore di connessione: ${error.message}</p>`;
+        }
+    }
+
+    // ------------------------------
+    // Carica le statistiche all'avvio
+    // ------------------------------
     loadStats();
 });

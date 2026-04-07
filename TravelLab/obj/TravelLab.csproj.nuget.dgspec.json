@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/nox/RiderProjects/TravelLab1.0/TravelLab/TravelLab.csproj": {}
+    "C:\\Users\\Nox\\Documents\\TravelLab\\TravelLab\\TravelLab.csproj": {}
   },
   "projects": {
-    "/home/nox/RiderProjects/TravelLab1.0/TravelLab/TravelLab.csproj": {
+    "C:\\Users\\Nox\\Documents\\TravelLab\\TravelLab\\TravelLab.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/nox/RiderProjects/TravelLab1.0/TravelLab/TravelLab.csproj",
+        "projectUniqueName": "C:\\Users\\Nox\\Documents\\TravelLab\\TravelLab\\TravelLab.csproj",
         "projectName": "TravelLab",
-        "projectPath": "/home/nox/RiderProjects/TravelLab1.0/TravelLab/TravelLab.csproj",
-        "packagesPath": "/home/nox/.nuget/packages/",
-        "outputPath": "/home/nox/RiderProjects/TravelLab1.0/TravelLab/obj/",
+        "projectPath": "C:\\Users\\Nox\\Documents\\TravelLab\\TravelLab\\TravelLab.csproj",
+        "packagesPath": "C:\\Users\\Nox\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nox\\Documents\\TravelLab\\TravelLab\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/nox/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Nox\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -44,11 +44,25 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.5, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[10.0.5, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[10.0.5, )"
             },
             "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[10.0.5, )"
             },
@@ -80,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/nox/.dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.200/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TravelLab.Data;
@@ -7,6 +8,7 @@ namespace  TravelLab
 {
     
 }
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ViaggiController : ControllerBase
