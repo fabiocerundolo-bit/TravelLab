@@ -229,4 +229,161 @@ La documentazione è allineata con lo stato attuale del progetto e può essere u
 
 ---
 
-*Documento aggiornato al 5 aprile 2026.*
+Certamente! Ecco un aggiornamento della documentazione del progetto **TravelLab** relativo alla funzionalità "Biglietti" e alle modifiche apportate per risolvere il problema della visualizzazione delle destinazioni.
+
+---
+
+## Aggiornamento Documentazione TravelLab
+
+### 1. Funzionalità Biglietti (Dashboard)
+
+#### Descrizione
+La sezione "Biglietti" della dashboard amministrativa visualizza l'elenco delle prenotazioni (biglietti) con i dettagli del cliente, del viaggio (destinazione, date) e lo stato della prenotazione.
+
+#### Flusso dati
+1. L'utente clicca sul pulsante **Biglietti** nella sidebar.
+2. Il frontend (script.js) chiama l'endpoint `GET /api/prenotazioni`.
+3. Il backend esegue una query con JOIN tra le tabelle `t_prenotazioni`, `t_viaggi` e `t_clienti`.
+4. I dati vengono restituiti in formato JSON "piatto" (campi direttamente accessibili, senza oggetti annidati).
+5. Il frontend costruisce una tabella con le colonne: ID Prenotazione, Cliente, Destinazione, Data partenza, Data rientro, Stato, Data prenotazione.
+
+### 2. Modifiche al Backend (ASP.NET Core)
+
+#### Controller `PrenotazioniController.cs`
+È stato modificato il metodo `GetAllPrenotazioni` (o l'endpoint `GET /api/prenotazioni`) utilizzando **LINQ Join** per ottenere i dati collegati:
+
+```csharp
+[HttpGet]
+public async Task<IActionResult> GetAllPrenotazioni()
+{
+    var query = from p in _context.Prenotazioni
+                join v in _context.Viaggi on p.ViaggioId equals v.Id
+                join c in _context.Clienti on p.ClienteId equals c.Id
+                select new
+                {
+                    p.Id,
+                    p.ClienteId,
+                    ClienteNome = c.Nome,
+                    ClienteCognome = c.Cognome,
+                    p.ViaggioId,
+                    Destinazione = v.Destinazione,
+                    DataInizio = v.DataInizio,
+                    DataFine = v.DataFine,
+                    p.AgenziaId,
+                    p.DataPrenotazione,
+                    p.Stato
+                };
+
+    var prenotazioni = await query.ToListAsync();
+    return Ok(prenotazioni);
+}
+```
+
+**Vantaggi:**
+- Non richiede proprietà di navigazione nel modello `Prenotazione`.
+- La query SQL generata è efficiente (singola join).
+- I dati arrivano già piatti e pronti per il frontend.
+
+#### Configurazione DbContext (opzionale)
+Se si utilizzano le proprietà di navigazione, è stata aggiunta la configurazione Fluent API in `OnModelCreating`:
+
+```csharp
+modelBuilder.Entity<Prenotazione>(entity =>
+{
+    entity.ToTable("t_prenotazioni");
+    entity.HasKey(e => e.Id);
+    entity.HasOne(e => e.Viaggio)
+          .WithMany()
+          .HasForeignKey(e => e.ViaggioId);
+    entity.HasOne(e => e.Cliente)
+          .WithMany()
+          .HasForeignKey(e => e.ClienteId);
+});
+```
+
+### 3. Modifiche al Frontend (script.js)
+
+#### Funzione `loadTickets()` (versione finale)
+
+```javascript
+async function loadTickets() {
+    const contentDiv = document.getElementById('content');
+    if (!contentDiv) return;
+
+    contentDiv.innerHTML = '<p>Caricamento biglietti...</p>';
+    let response;
+    try {
+        response = await fetch('/api/prenotazioni');
+        if (response.status === 401) {
+            window.location.href = '/login.html';
+            return;
+        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const data = await response.json();
+        
+        if (!data || data.length === 0) {
+            contentDiv.innerHTML = '<p>Nessun biglietto trovato.</p>';
+            return;
+        }
+        
+        // Mappa i dati piatti alle colonne della tabella
+        const enhancedData = data.map(p => ({
+            'ID Prenotazione': p.id,
+            'Cliente': `${p.clienteNome} ${p.clienteCognome}`.trim() || p.clienteId,
+            'Destinazione': p.destinazione || 'N/D',
+            'Data partenza': p.dataInizio ? p.dataInizio.split('T')[0] : '',
+            'Data rientro': p.dataFine ? p.dataFine.split('T')[0] : '',
+            'Stato': p.stato,
+            'Data prenotazione': p.dataPrenotazione ? p.dataPrenotazione.split('T')[0] : ''
+        }));
+        
+        const table = buildTableFromData(enhancedData);
+        contentDiv.innerHTML = '';
+        contentDiv.appendChild(table);
+        
+    } catch (error) {
+        console.error('Errore loadTickets:', error);
+        contentDiv.innerHTML = `<p style="color:red;">Errore di connessione: ${error.message}</p>`;
+    }
+}
+```
+
+#### Event listener per il pulsante
+Nel blocco di inizializzazione `DOMContentLoaded` è stato aggiunto:
+
+```javascript
+document.getElementById('btn-biglietti')?.addEventListener('click', () => {
+    loadTickets();
+});
+```
+
+### 4. Problemi riscontrati e soluzioni
+
+| Problema | Causa | Soluzione |
+|----------|-------|-----------|
+| Cliccando "Biglietti" non succede nulla | Manca la funzione `loadTickets` o l'event listener | Aggiunta la funzione e l'event listener |
+| Destinazione mostra "N/D" | Backend restituiva solo `viaggioId` senza dati del viaggio | Modifica del backend con JOIN per restituire `destinazione`, `dataInizio`, `dataFine` |
+| Frontend riceve dati ma non li visualizza | Il frontend cercava oggetti annidati (`p.viaggio?.destinazione`) | Adattamento a struttura piatta (`p.destinazione`) |
+| Errore `AmbiguousMatchException` | Due metodi `HttpGet` senza route distinta | Rimosso il metodo duplicato o differenziato le route |
+
+### 5. Test di verifica
+
+Per confermare il corretto funzionamento:
+
+1. Accedere alla dashboard con utente amministratore.
+2. Cliccare su **Biglietti** nella sidebar.
+3. Verificare che venga visualizzata una tabella con i dati delle prenotazioni, incluse destinazioni e nomi clienti.
+4. Aprire la console del browser (F12) → scheda Network → controllare che la chiamata a `/api/prenotazioni` restituisca JSON con campi `destinazione`, `clienteNome`, `dataInizio`, `dataFine`.
+
+### 6. Note per manutenzione futura
+
+- Se in futuro si aggiungono nuovi campi al viaggio (es. `descrizione`, `prezzo`), aggiornare sia la query LINQ (select) che la mappatura frontend.
+- Per migliorare le performance su grandi volumi di dati, valutare l'uso di DTO dedicati e paginazione.
+- La funzione `buildTableFromData` è generica e può essere riutilizzata per qualsiasi tabella.
+
+---
+
+**Documentazione aggiornata al:** 7 aprile 2026
+
+Se servono ulteriori chiarimenti o si desidera estendere la documentazione ad altri moduli (es. Clienti, Voli, Statistiche), è possibile richiederlo.
