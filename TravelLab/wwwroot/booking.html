@@ -92,30 +92,38 @@
     }
     async function populateTrainsAndShips() {
         try {
+            // --- TRENI: raggruppati per compagnia ---
             const treniRes = await fetch('/api/treni');
             if (treniRes.ok) {
                 const treni = await treniRes.json();
+                // Raggruppa per compagnia (prende il primo treno per compagnia)
+                const compagnieTreno = new Map();
+                treni.forEach(t => {
+                    if (!compagnieTreno.has(t.compagnia)) {
+                        compagnieTreno.set(t.compagnia, t.id_servizio);
+                    }
+                });
                 const trenoSelect = document.getElementById('treno_id');
                 trenoSelect.innerHTML = '<option value="">Nessun treno</option>';
-                treni.forEach(t => {
-                    const idServ = t.IdServizio || t.id_servizio; // supporto sia Pascal che snake
-                    const numero = t.NumeroTreno || t.numero_treno || `Treno ${idServ}`;
-                    const compagnia = t.Compagnia || t.compagnia || 'Treno';
-                    const prezzo = t.PrezzoBase || t.prezzo_base || 50;
-                    trenoSelect.innerHTML += `<option value="${idServ}"> ${compagnia} (€${prezzo})</option>`;
+                compagnieTreno.forEach((id, compagnia) => {
+                    trenoSelect.innerHTML += `<option value="${id}">${compagnia}</option>`;
                 });
             }
+
+            // --- NAVI: raggruppate per compagnia ---
             const naviRes = await fetch('/api/navi');
             if (naviRes.ok) {
                 const navi = await naviRes.json();
+                const compagnieNave = new Map();
+                navi.forEach(n => {
+                    if (!compagnieNave.has(n.compagnia)) {
+                        compagnieNave.set(n.compagnia, n.id_servizio);
+                    }
+                });
                 const naveSelect = document.getElementById('nave_id');
                 naveSelect.innerHTML = '<option value="">Nessuna nave</option>';
-                navi.forEach(n => {
-                    const idServ = n.IdServizio || n.id_servizio;
-                    const nome = n.NomeNave || n.nome_nave || `Nave ${idServ}`;
-                    const compagnia = n.Compagnia || n.compagnia || 'Nave';
-                    const prezzo = n.PrezzoBase || n.prezzo_base || 200;
-                    naveSelect.innerHTML += `<option value="${idServ}">${compagnia} (€${prezzo})</option>`;
+                compagnieNave.forEach((id, compagnia) => {
+                    naveSelect.innerHTML += `<option value="${id}">${compagnia}</option>`;
                 });
             }
         } catch (err) {

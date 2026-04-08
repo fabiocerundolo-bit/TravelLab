@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TravelLab")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+592295f781902a4c0d78e5ab7f8677a3df76a8f6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1b513e7c7e72a8b8bbfb358b3b88896a149a1ad6")]
 [assembly: System.Reflection.AssemblyProductAttribute("TravelLab")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TravelLab")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -6,7 +6,7 @@ using TravelLab.Models;
 
 namespace TravelLab.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("api/[controller]")]
     public class PrenotazioniController : ControllerBase
@@ -49,7 +49,7 @@ namespace TravelLab.Controllers
             var count = await _context.Prenotazioni.CountAsync();
             return Ok(new { count });
         }
-
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreatePrenotazione([FromBody] CreatePrenotazioneDto dto)
         {

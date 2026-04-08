@@ -6,7 +6,7 @@ using TravelLab.Models;
 
 namespace TravelLab.Controllers
 {
-    [Authorize]
+    
     [ApiController]
     [Route("api/[controller]")]
     public class ClientiController : ControllerBase
@@ -17,7 +17,7 @@ namespace TravelLab.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetClienti()
         {
@@ -35,7 +35,8 @@ namespace TravelLab.Controllers
 
             return Ok(clienti);
         }
-
+        
+        [Authorize(Roles = "Admin")]
         [HttpGet("senza-prenotazioni")]
         public async Task<IActionResult> GetClientiSenzaPrenotazioni()
         {
@@ -45,6 +46,7 @@ namespace TravelLab.Controllers
                 .ToListAsync();
             return Ok(clienti);
         }
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateCliente([FromBody] Cliente cliente)
         {
@@ -53,6 +55,7 @@ namespace TravelLab.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetClienti), new { id = cliente.Id }, cliente);
         }
+        [AllowAnonymous]
         [HttpGet("by-email")]
         public async Task<IActionResult> GetClienteByEmail(string email)
         {

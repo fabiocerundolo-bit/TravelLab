@@ -8,14 +8,15 @@ namespace  TravelLab
 {
     
 }
-[Authorize]
+[Authorize(Roles = "Admin")]
 [ApiController]
 [Route("api/[controller]")]
 public class ViaggiController : ControllerBase
 {
     private readonly TravelLabContext _context;
     public ViaggiController(TravelLabContext context) => _context = context;
-
+    
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetViaggi()
     {

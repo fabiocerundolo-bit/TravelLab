@@ -21,6 +21,7 @@ namespace TravelLab.Controllers
         
 
         // Endpoint per creare un biglietto treno
+        [AllowAnonymous]
         [HttpPost("treno")]
         public async Task<IActionResult> CreateBigliettoTreno([FromBody] CreateBigliettoTrenoDto dto)
         {
@@ -52,6 +53,7 @@ namespace TravelLab.Controllers
         
 
         // Endpoint per creare un biglietto nave
+        [AllowAnonymous]
         [HttpPost("nave")]
         public async Task<IActionResult> CreateBigliettoNave([FromBody] CreateBigliettoNaveDto dto)
         {
@@ -78,7 +80,8 @@ namespace TravelLab.Controllers
 
             return Ok(biglietto);
         }
-        [HttpGet]
+        
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllBiglietti()
         {

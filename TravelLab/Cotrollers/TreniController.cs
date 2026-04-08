@@ -6,7 +6,7 @@ using TravelLab.Models;
 
 namespace TravelLab.Controllers
 {
-    [Authorize]
+    
     [ApiController]
     [Route("api/[controller]")]
     public class TreniController : ControllerBase

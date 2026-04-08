@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TravelLab.Data;
 namespace TravelLab.Controllers;
 
-[Authorize]
+[Authorize(Roles = "Admin")]
 [ApiController]
 [Route("api/[controller]")]
 public class AgenzieController : ControllerBase

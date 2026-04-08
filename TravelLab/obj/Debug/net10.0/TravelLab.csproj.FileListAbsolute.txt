@@ -184,7 +184,6 @@ C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\rjsmrazor.dswa.cach
 C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
 C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\scopedcss\bundle\TravelLab.styles.css
 C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\compressed\7dj0ju5dxd-{0}-fsxyirpp5w-fsxyirpp5w.gz
-C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\compressed\jp24xirtex-{0}-v8w3dwy1o1-v8w3dwy1o1.gz
 C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\compressed\hvdwnst1hs-{0}-gg43c56dou-gg43c56dou.gz
 C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\compressed\kix6xylkm8-{0}-5vabk177kp-5vabk177kp.gz
 C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\compressed\i7p8c500vk-{0}-x6k9bzx2r6-x6k9bzx2r6.gz
@@ -353,3 +352,4 @@ C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\compressed\yfc7ypek
 C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\compressed\1vxb7w4y8x-{0}-bbq8xr8ow7-bbq8xr8ow7.gz
 C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\compressed\6ji3qzimsa-{0}-94ed6n0845-94ed6n0845.gz
 C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\compressed\t0a8r6xulg-{0}-xyv8wj3la0-xyv8wj3la0.gz
+C:\Users\Nox\Documents\TravelLab\TravelLab\obj\Debug\net10.0\compressed\jp24xirtex-{0}-3hlvd1b0j0-3hlvd1b0j0.gz
